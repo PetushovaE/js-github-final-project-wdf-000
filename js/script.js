@@ -1,21 +1,17 @@
-$(document).ready(function() {
-  submitForm()
-});
-
 class GithubInteractor {
 	constructor(token) {
   		this.token = token;
 	}
 }
 
-function createIssue(repoName, repoOwner, issueTitle, issueBody) {
+function createIssue(repoName, repoOwner, title, body) {
   $.ajax({
     url: "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/issues",
     type: "POST",
     dataType: "json",
     data: JSON.stringify({
-      'title': issueTitle,
-      'body': issueBody,
+      'title': title,
+      'body': body,
     }),
     headers: {Authorization: GithubInteractor.token}
   }).done(function(response) {
@@ -37,9 +33,14 @@ function submitForm() {
   $('form').on('submit', function(event) {
     var repoName = $('#repoName').val();
     var repoOwner = $('#repoOwner').val();
-    var issueTitle = $('#title').val();
-    var issueBody = $('#body').val();
-    createIssue(repoName, repoOwner, issueTitle, issueBody);
+    var title = $('#title').val();
+    var body = $('#body').val();
+    createIssue(repoName, repoOwner, title, body);
   });
 }
+
+// $(document).ready(function() {
+//   submitForm()
+// });
+
 
